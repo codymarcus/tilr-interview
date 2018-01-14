@@ -29,9 +29,17 @@ const Contact = db.define('contact', {
     type: Sequelize.STRING
   }
 }, {
-  underscored: true
+  underscored: true,
+  paranoid: true
 })
 
 Contact.belongsTo(User)
+
+Contact.cleanAttributes = (contact) => {
+  const updatable = ['firstName', 'lastName', 'company', 'email', 'phone', 'address']
+  return updatable.reduce((acc, cur) =>
+    contact[cur] ? { ...acc, [cur]: contact[cur] } : acc
+  , {})
+} 
 
 module.exports = Contact
