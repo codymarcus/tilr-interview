@@ -1,0 +1,18 @@
+.contact-panel {
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  top: 54px;
+  width: 50vw;
+  z-index: 2;
+}
+
+.contact-panel__title-group {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .contact-panel {
+    width: 100vw;
+  }
+}
