@@ -1,14 +1,14 @@
 .contact-panel {
-  bottom: 0;
-  position: fixed;
+  min-height: calc(100vh - 54px);
+  position: absolute;
   right: 0;
   top: 54px;
   width: 50vw;
   z-index: 2;
 }
 
-.contact-panel__title-group {
-  margin-bottom: 20px;
+.contact-panel__edit {
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 767px) {

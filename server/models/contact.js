@@ -38,7 +38,7 @@ Contact.belongsTo(User)
 Contact.cleanAttributes = (contact) => {
   const updatable = ['firstName', 'lastName', 'company', 'email', 'phone', 'address']
   return updatable.reduce((acc, cur) =>
-    contact[cur] ? { ...acc, [cur]: contact[cur] } : acc
+    contact[cur] !== null ? { ...acc, [cur]: contact[cur] } : acc
   , {})
 } 
 
