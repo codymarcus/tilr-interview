@@ -1,29 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setIsEditing, saveEditedContact, deleteContact } from '../../actions'
-import EditContactAttribute from './EditContactAttribute'
+import { setIsEditing, setIsCreating, saveEditedContact, deleteContact, saveCreatedContact } from '../../actions'
+import EditContactAttributeList from './EditContactAttributeList'
 import './style.css'
 
-const labels = {
-  firstName: 'first name',
-  lastName: 'last name',
-  company: 'company',
-  address: 'address',
-  phone: 'phone',
-  email: 'email'
-}
-
-const EditContact = ({ editContact, setIsEditing, saveEditedContact, deleteContact }) => (
+const EditContact = props => (
   <div>
-    {Object.keys(labels).map(attr =>
-      labels[attr]
-        ? <EditContactAttribute key={attr} label={labels[attr]} attribute={attr} value={editContact[attr] || ''} />
-        : null
-    )}
+    <EditContactAttributeList contact={props.contact} />
     <div className='button-container'>
       <button
         className='btn btn-primary col-12'
-        onClick={saveEditedContact}
+        onClick={props.isCreating ? props.saveCreatedContact : props.saveEditedContact}
       >
         Save
       </button>
@@ -31,29 +18,40 @@ const EditContact = ({ editContact, setIsEditing, saveEditedContact, deleteConta
     <div className='button-container'>
       <button
         className='btn btn-outline-secondary col-12'
-        onClick={() => setIsEditing(false)}
+        onClick={() => {
+          props.setIsEditing(false)
+          props.setIsCreating(false)
+        }}
       >
         Cancel
       </button>
     </div>
-    <div className='button-delete-container'>
-      <button
-        className='btn btn-danger col-12'
-        onClick={deleteContact}
-      >
-        Delete
-      </button>
-    </div>
+    {props.isCreating 
+      ? null
+      : (
+        <div className='button-delete-container'>
+          <button
+            className='btn btn-danger col-12'
+            onClick={props.deleteContact}
+          >
+            Delete
+          </button>
+        </div>
+      )
+    }
   </div>
 )
 
 const mapStateToProps = ({ contacts }) => ({
-  editContact: contacts.editContact
+  contact: contacts.editContact,
+  isCreating: contacts.isCreating
 })
 
 const mapDispatchToProps = {
   setIsEditing,
+  setIsCreating,
   saveEditedContact,
+  saveCreatedContact,
   deleteContact
 }
 

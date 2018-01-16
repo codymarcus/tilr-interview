@@ -1,20 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setFilter } from '../../actions'
+import { setFilter, setIsCreating } from '../../actions'
+import './style.css'
 
 const Header = (props) => (
   <div className='row justify-content-center navbar fixed-top bg-primary'>
-    <input
-      className='form-control col-11 col-md-6 col-lg-4'
-      placeholder='Search'
-      onChange={event => props.setFilter(event.target.value)}
-    />
+    <div className='row col-lg-8 justify-content-md-center'>
+      <input
+        className='form-control col-9 col-md-6'
+        placeholder='Search'
+        onChange={event => props.setFilter(event.target.value)}
+      />
+      <button
+        className='btn btn-light new-button'
+        onClick={() => props.setIsCreating(true)}
+      >
+        New
+      </button>
+    </div>
   </div>
 )
 
 const mapDispatchToProps = {
-  setFilter
+  setFilter,
+  setIsCreating
 }
 
 export default connect(null, mapDispatchToProps)(Header)
-

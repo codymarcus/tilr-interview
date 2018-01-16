@@ -3,12 +3,14 @@ import { sortByLastName } from '../helpers'
 
 export const fetchContacts = () => (dispatch) => {
   dispatch({ type: 'FETCHING_ALL_CONTACTS' })
-  contactService.getContacts().then(response => dispatch({
-    type: 'SET_ALL_CONTACTS',
-    payload: {
-      allContacts: response.data.sort(sortByLastName)
-    }
-  }))
+  contactService.getContacts()
+    .then(response => dispatch({
+      type: 'SET_ALL_CONTACTS',
+      payload: {
+        allContacts: response.data.sort(sortByLastName)
+      }
+    }))
+    .catch(err => window.alert(err.response.data.message))
 }
 
 export const setFilter = filter => (dispatch, getState) => {
@@ -58,6 +60,7 @@ export const saveEditedContact = () => (dispatch, getState) => {
   const editedContact = getState().contacts.editContact
   contactService.editContact(editedContact.id, editedContact)
     .then(() => dispatch({ type: 'SAVED_EDITED_CONTACT' }))
+    .catch(err => window.alert(err.response.data.message))
 }
 
 export const deleteContact = id => (dispatch, getState) => {
@@ -65,4 +68,25 @@ export const deleteContact = id => (dispatch, getState) => {
   const contact = getState().contacts.editContact
   contactService.deleteContact(contact.id)
     .then(() => dispatch({ type: 'DELETED_CONTACT' }))
+    .catch(err => window.alert(err.response.data.message))
+}
+
+export const setIsCreating = isCreating => ({
+  type: 'SET_IS_CREATING',
+  payload: {
+    isCreating
+  }
+})
+
+export const saveCreatedContact = () => (dispatch, getState) => {
+  dispatch({ type: 'SAVING_CREATED_CONTACT' })
+  const createdContact = getState().contacts.editContact
+  contactService.createContact(createdContact)
+    .then(response => dispatch({
+      type: 'SAVED_CREATED_CONTACT',
+      payload: {
+        newContact: response.data
+      }
+    }))
+    .catch(err => window.alert(err.response.data.message))
 }

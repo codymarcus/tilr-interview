@@ -1,11 +1,12 @@
 import React from 'react'
+import './style.css'
 
 const ContactItem = (props) => (
   <div
-    className='list-group-item list-group-item-action d-flex justify-content-center'
+    className='list-group-item list-group-item-action d-flex justify-content-center contact-item'
     onClick={props.onClick}
   >
-    <div className='col-12 col-md-11'>{props.firstName} <b>{props.lastName}</b></div>
+    <div className='col-md-10 col-lg-8'>{props.firstName} <b>{props.lastName}</b></div>
   </div>
 )
 

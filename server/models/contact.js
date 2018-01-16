@@ -1,13 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const User = require('./user')
 
 const Contact = db.define('contact', {
-  userId: {
-    type: Sequelize.INTEGER,
-    field: 'user_id',
-    allowNull: false
-  },
   firstName: {
     type: Sequelize.STRING,
     field: 'first_name'
@@ -32,8 +26,6 @@ const Contact = db.define('contact', {
   underscored: true,
   paranoid: true
 })
-
-Contact.belongsTo(User)
 
 Contact.cleanAttributes = (contact) => {
   const updatable = ['firstName', 'lastName', 'company', 'email', 'phone', 'address']

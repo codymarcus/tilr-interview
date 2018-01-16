@@ -1,9 +1,18 @@
+import { sortByLastName } from '../helpers'
+
 const defaultState = {
   allContacts: [],
-  editContact: null,
+  editContact: {
+    firstName: null,
+    lastName: null,
+    email: null,
+    address: null,
+    phone: null
+  },
   filteredContacts: [],
   isEditing: false,
   isFetchingAllContacts: false,
+  isCreating: false,
   selected: null
 }
 
@@ -30,11 +39,13 @@ const contacts = (state = defaultState, action) => {
       return {
         ...state,
         selected: action.payload.contact,
+        isCreating: false,
         isEditing: false
       }
     case 'SET_IS_EDITING':
       return {
         ...state,
+        isCreating: false,
         isEditing: action.payload.isEditing,
         editContact: action.payload.isEditing ? { ...state.selected } : null
       }
@@ -47,12 +58,40 @@ const contacts = (state = defaultState, action) => {
         }
       }
     case 'SAVED_EDITED_CONTACT':
+      const newContacts = state.allContacts
+        .map(contact => contact.id === state.editContact.id ? { ...state.editContact } : contact)
+        .sort(sortByLastName)
       return {
         ...state,
         isEditing: false,
-        allContacts: state.allContacts.map(contact => contact.id === state.editContact.id ? { ...state.editContact } : contact),
-        filteredContacts: state.filteredContacts.map(contact => contact.id === state.editContact.id ? { ...state.editContact } : contact),
+        allContacts: newContacts,
+        filteredContacts: newContacts,
         selected: { ...state.editContact }
+      }
+    case 'SET_IS_CREATING':
+      return {
+        ...state,
+        isCreating: action.payload.isCreating,
+        isEditing: false,
+        selected: null,
+        editContact: defaultState.editContact
+      }
+    case 'SAVED_CREATED_CONTACT':
+      return {
+        ...state,
+        isEditing: false,
+        isCreating: false,
+        allContacts: [...state.allContacts, action.payload.newContact].sort(sortByLastName),
+        filteredContacts: [...state.allContacts, action.payload.newContact].sort(sortByLastName),
+        selected: { ...action.payload.newContact }
+      }
+    case 'DELETED_CONTACT':
+      return {
+        ...state,
+        isEditing: false,
+        selected: null,
+        allContacts: state.allContacts.filter(contact => contact.id !== state.selected.id),
+        filteredContacts: state.filteredContacts.filter(contact => contact.id !== state.selected.id)
       }
     default:
       return state
