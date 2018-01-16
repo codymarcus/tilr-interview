@@ -1,0 +1,12 @@
+{
+  "name": "tilr-interview",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/codymarcus/tilr-interview.git",
+  "license": "MIT",
+  "scripts": {
+    "setup": "cd server && node scripts/db.js && node_modules/.bin/sequelize db:migrate",
+    "start-server": "cd server && yarn start",
+    "start-client": "cd client && yarn start"
+  }
+}

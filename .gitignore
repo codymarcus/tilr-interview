@@ -58,4 +58,4 @@ typings/
 .env
 
 # db config
-server/config/db.json
+server/config/config.json
