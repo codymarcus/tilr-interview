@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import EditContactAttribute from './EditContactAttribute'
 
 const labels = {
@@ -20,4 +21,8 @@ const EditContactAttributeList = ({ contact }) =>
     />
   )
 
-  export default EditContactAttributeList
+EditContactAttributeList.propTypes = {
+  contact: PropTypes.object.isRequired
+}
+
+export default EditContactAttributeList

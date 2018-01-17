@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setIsEditing, setIsCreating, saveEditedContact, deleteContact, saveCreatedContact } from '../../actions'
 import EditContactAttributeList from './EditContactAttributeList'
@@ -41,6 +42,16 @@ const EditContact = props => (
     }
   </div>
 )
+
+EditContact.propTypes = {
+  contact: PropTypes.object.isRequired,
+  deleteContact: PropTypes.func.isRequired,
+  isCreating: PropTypes.bool.isRequired,
+  saveCreatedContact: PropTypes.func.isRequired,
+  saveEditedContact: PropTypes.func.isRequired,
+  setIsCreating: PropTypes.func.isRequired,
+  setIsEditing: PropTypes.func.isRequired
+}
 
 const mapStateToProps = ({ contacts }) => ({
   contact: contacts.editContact,

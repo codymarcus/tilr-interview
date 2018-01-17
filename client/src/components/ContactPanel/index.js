@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import ContactView from '../ContactView'
 import ContactEdit from '../ContactEdit'
@@ -16,6 +17,16 @@ const ContactPanel = ({ contact, isEditing, isCreating }) => {
       </div>
     </div>
   )
+}
+
+ContactPanel.propTypes = {
+  contact: PropTypes.object,
+  isCreating: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired
+}
+
+ContactPanel.defaultProps = {
+  contact: null
 }
 
 const mapStateToProps = ({ contacts }) => ({

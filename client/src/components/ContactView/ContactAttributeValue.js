@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const ContactAttributeValue = ({ attribute, value }) => {
   if (attribute === 'email') {
@@ -11,6 +12,11 @@ const ContactAttributeValue = ({ attribute, value }) => {
     return <a className='card-link' href={`tel:${value}`}>{value}</a>
   }
   return <div>{value}</div>
+}
+
+ContactAttributeValue.propTypes = {
+  attribute: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
 }
 
 export default ContactAttributeValue

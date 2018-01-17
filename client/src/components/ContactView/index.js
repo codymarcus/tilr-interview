@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ContactAttributeList from './ContactAttributeList'
 import { setIsEditing, selectContact } from '../../actions'
@@ -25,6 +26,12 @@ const ViewContact = ({ contact, setIsEditing, selectContact }) => (
     </div>
   </div>
 )
+
+ViewContact.propTypes = {
+  contact: PropTypes.object.isRequired,
+  selectContact: PropTypes.func.isRequired,
+  setIsEditing: PropTypes.func.isRequired
+}
 
 const mapDispatchToProps = {
   setIsEditing,
